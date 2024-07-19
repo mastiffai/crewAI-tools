@@ -67,7 +67,7 @@ class BaseTool(BaseModel, ABC):
             name=self.name,
             description=self.description,
             args_schema=self.args_schema,
-            func=self._run,
+            func=lambda *args, **kwargs: self._run(*args, **kwargs, config=kwargs.get('config'))
         )
 
     def _set_args_schema(self):
