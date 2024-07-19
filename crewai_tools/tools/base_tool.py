@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Optional, Type
+from typing import Any, Callable, Optional, Type, Union, Awaitable, Dict
 
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, ConfigDict, Field, validator
@@ -102,12 +102,12 @@ class Tool(BaseTool):
     func: Callable
     """The function that will be executed when the tool is called."""
 
-    def _run(self, *args: Any, **kwargs: Any) -> Any:
-        return self.func(*args, **kwargs)
+    def _run(self, *args: Any, config: Optional[dict] = None, **kwargs: Any) -> Any:
+        return self.func(*args, config=config, **kwargs)
 
 
 def to_langchain(
-    tools: list[BaseTool | StructuredTool],
+    tools: list[Union[BaseTool, StructuredTool]],
 ) -> list[StructuredTool]:
     return [t.to_langchain() if isinstance(t, BaseTool) else t for t in tools]
 
