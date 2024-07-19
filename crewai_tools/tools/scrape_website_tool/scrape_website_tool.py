@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Optional, Type, Any
 from pydantic.v1 import BaseModel, Field
+from ..base_tool import BaseTool
 
 class FixedScrapeWebsiteToolSchema(BaseModel):
     """Input for ScrapeWebsiteTool."""
